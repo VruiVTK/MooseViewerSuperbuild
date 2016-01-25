@@ -5,6 +5,12 @@ SET(VTK_ROOT
   CACHE INTERNAL ""
   )
 
+if(WIN32)
+  set(vtk_tbb_libsuffix ${CMAKE_IMPORT_LIBRARY_SUFFIX})
+else()
+  set(vtk_tbb_libsuffix ${CMAKE_SHARED_LIBRARY_SUFFIX})
+endif()
+
 # NOTE: For now we only support Mac and Windows.
 SET (VTK_CMAKE_ARGS
   -DBUILD_TESTING:BOOL=OFF
@@ -12,10 +18,19 @@ SET (VTK_CMAKE_ARGS
   -DBUILD_EXAMPLES:BOOL=OFF
   -DModule_vtkRenderingExternal:BOOL=ON
   -DVTK_RENDERING_BACKEND:STRING=${VTK_RENDERING_BACKEND}
+  -DVTK_SMP_IMPLEMENTATION_TYPE:STRING=TBB
+  "-DTBB_ROOT:PATH=${CMAKE_BINARY_DIR}/TBB/bld"
+  "-DTBB_INCLUDE_DIR:PATH=${CMAKE_BINARY_DIR}/TBB/bld/include"
+  "-DTBB_LIBRARY_RELEASE:FILEPATH=${CMAKE_BINARY_DIR}/TBB/bld/lib/libtbb${vtk_tbb_libsuffix}"
+  "-DTBB_LIBRARY_DEBUG:FILEPATH="
+  "-DTBB_MALLOC_INCLUDE_DIR:PATH=${CMAKE_BINARY_DIR}/TBB/bld/include"
+  "-DTBB_MALLOC_LIBRARY_RELEASE:FILEPATH=${CMAKE_BINARY_DIR}/TBB/bld/lib/libtbbmalloc${vtk_tbb_libsuffix}"
+  "-DTBB_MALLOC_LIBRARY_DEBUG:FILEPATH="
   )
 
 ExternalProject_Add(
   VTK
+  DEPENDS TBB
   PREFIX "${VTK_ROOT}"
   STAMP_DIR "${VTK_ROOT}/stamp"
   GIT_REPOSITORY "https://gitlab.kitware.com/vtk/vtk.git"
