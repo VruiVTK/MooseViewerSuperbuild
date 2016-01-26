@@ -20,14 +20,15 @@ SET (EP_BASE
 # Build VRUI
 INCLUDE (VRUI)
 
+# Get TBB
+INCLUDE (tbb)
+
+# Build VTK
 SET (VTK_RENDERING_BACKEND "OpenGL" CACHE STRING
   "Choose the VTK rendering backend.")
-
 # Set the possible values of rendering backends for cmake-gui
 SET_PROPERTY (CACHE VTK_RENDERING_BACKEND PROPERTY
   STRINGS "OpenGL;OpenGL2")
-
-# Build VTK
 INCLUDE (VTK)
 
 # Build MooseViewer
