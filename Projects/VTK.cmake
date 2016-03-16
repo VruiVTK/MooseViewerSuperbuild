@@ -35,7 +35,7 @@ ExternalProject_Add(
   PREFIX "${VTK_ROOT}"
   STAMP_DIR "${VTK_ROOT}/stamp"
   GIT_REPOSITORY "https://gitlab.kitware.com/vtk/vtk.git"
-  GIT_TAG "d6dac9974997e9ef0f0dd8ad1c6e498ace65318d"
+  GIT_TAG master
   #  UPDATE_COMMAND ${GIT_EXECUTABLE} pull
   SOURCE_DIR "${VTK_ROOT}/src"
   BINARY_DIR "${VTK_ROOT}/bld"
