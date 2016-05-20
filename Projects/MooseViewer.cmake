@@ -5,15 +5,18 @@ SET(MooseViewer_ROOT
   )
 
 SET(MooseViewer_CMAKE_ARGS
-  -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
-  -DVRUI_PKGCONFIG_DIR:PATH=${VRUI_ROOT}/pkgconfig
-  -DVTK_DIR:PATH=${VTK_ROOT}/bld
-  -DCMAKE_INSTALL_PREFIX:PATH=${CMAKE_BINARY_DIR}
+  "-DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}"
+  "-DVRUI_PKGCONFIG_DIR:PATH=${VRUI_ROOT}/pkgconfig"
+  "-DVTK_DIR:PATH=${VTK_ROOT}/bld"
+  "-DCMAKE_INSTALL_PREFIX:PATH=${CMAKE_BINARY_DIR}"
+  "-DvtkVRUI_INCLUDE_DIRS=${vtkVRUI_ROOT}/src"
+  # TODO find a more flexible way of finding the library:
+  "-DvtkVRUI_LIBRARIES=${vtkVRUI_ROOT}/bld/lib/libvtkVRUI.a"
   )
 
 ExternalProject_Add(
   MooseViewer
-  DEPENDS VRUI VTK
+  DEPENDS VRUI VTK vtkVRUI
   PREFIX "${MooseViewer_ROOT}"
   STAMP_DIR "${MooseViewer_ROOT}/stamp"
   GIT_REPOSITORY "https://github.com/VruiVTK/MooseViewer.git"

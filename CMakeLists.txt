@@ -31,5 +31,7 @@ SET_PROPERTY (CACHE VTK_RENDERING_BACKEND PROPERTY
   STRINGS "OpenGL;OpenGL2")
 INCLUDE (VTK)
 
+include(vtkVRUI)
+
 # Build MooseViewer
 INCLUDE (MooseViewer)
